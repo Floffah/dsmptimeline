@@ -22,13 +22,11 @@
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
     "skipLibCheck": true,
-//    "paths": {
-//      "*": [
-//        ".snowpack/.types/*"
-//      ]
-//    },
-    "jsxFactory": "h",
-    "jsxFragmentFactory": "Fragment"
+    "paths": {
+      "*": [
+        ".snowpack/.types/*"
+      ]
+    }
   },
   "exclude": [
     "node_modules",

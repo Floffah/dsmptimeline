@@ -1,7 +1,7 @@
 module.exports = {
     root: true,
     parser: "@typescript-eslint/parser",
-    plugins: ["workspaces", "@typescript-eslint"],
+    plugins: ["@typescript-eslint"],
     extends: [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
@@ -10,9 +10,6 @@ module.exports = {
         "preact",
     ],
     rules: {
-        "workspaces/no-relative-imports": "error",
-        "workspaces/require-dependency": "warn",
-        "workspaces/no-cross-imports": "off",
         "@typescript-eslint/explicit-module-boundary-types": "off",
         "@typescript-eslint/no-explicit-any": "off",
         "no-unused-vars": "off",
@@ -33,5 +30,5 @@ module.exports = {
     },
     settings: {
         prettier: true,
-    }
+    },
 };
