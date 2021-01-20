@@ -1,6 +1,10 @@
 # Dream SMP Timeline
 All streams/videos of the smp cut into a big timeline
 
+## Developers
+
+You may notice that some of the key dependencies like react, styled-components, etc are not installed. This **is** intentional. It is to reduce project size. The reason snowpack, typescript, and your IDE don't complain that these aren't installed is because in Snowpack's V3 update, it allows remote imports. This means it treeshakes what you are importing and copies type definitions to `.snowpack/.snowpack/types` (may change to a single `.snowpack` must be a bug) and replaces your imports with these remote urls in development and downloads them to the static build directory in production. Pretty smart right? Snowpack is amazing I love it.
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):

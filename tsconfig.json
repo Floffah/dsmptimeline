@@ -24,9 +24,11 @@
     "skipLibCheck": true,
     "paths": {
       "*": [
-        ".snowpack/.types/*"
+        ".snowpack/types/*",
+        ".snowpack/.snowpack/types/*"
       ]
-    }
+    },
+    "allowSyntheticDefaultImports": true,
   },
   "exclude": [
     "node_modules",

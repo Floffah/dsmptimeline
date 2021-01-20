@@ -10,11 +10,17 @@ export default function getTheme(name = "dark"): Theme {
 export function schemeToTheme(scheme: Scheme): Theme {
     return {
         bg: scheme.accent[11],
+        topareas: {
+            bg: scheme.accent[10],
+        },
     };
 }
 
 export interface Theme {
     bg: string;
+    topareas: {
+        bg: string;
+    };
 }
 
 export interface Scheme {

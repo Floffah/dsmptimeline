@@ -17,6 +17,7 @@ module.exports = {
     packageOptions: {
         installTypes: true,
         source: "remote",
+        polyfillNode: true,
         types: true,
     },
     buildOptions: {
