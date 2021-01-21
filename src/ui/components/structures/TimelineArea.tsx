@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import AppState from "../../state/AppState";
+import { Progress } from "antd";
 
 interface TAState {
     toppos: number;
@@ -17,6 +18,7 @@ export default class TimelineArea extends React.Component<any, TAState> {
         };
 
         AppState.inst.on("topresize", (n) => this.onTopresize(n));
+        AppState.inst.on("timelineLoad", () => this.forceUpdate());
     }
 
     onTopresize(newsize: number) {
@@ -28,13 +30,24 @@ export default class TimelineArea extends React.Component<any, TAState> {
     render() {
         let content = <TAMidText>Loading...</TAMidText>;
 
-        if (!AppState.inst.loaded) {
+        if (AppState.inst.loading) {
+            content = (
+                <TAMidText>
+                    Doing some calculations...
+                    <br />
+                    <Progress percent={15} status="active" />
+                </TAMidText>
+            );
+        } else if (!AppState.inst.loaded) {
             content = <TAMidText>Please load a timeline</TAMidText>;
         }
 
         return (
             <TimelineContainer
-                toppos={this.state.toppos}
+                style={{
+                    top: this.state.toppos,
+                    height: `calc(100% - ${this.state.toppos + 25}px)`,
+                }}
                 full={this.state.isfull}
             >
                 {content}
@@ -51,10 +64,8 @@ export const TAMidText = styled.p`
     font-size: 20px;
 `;
 
-export const TimelineContainer = styled.div<{ toppos: number; full: boolean }>`
+export const TimelineContainer = styled.div<{ full: boolean }>`
     width: 100%;
-    top: ${(props) => props.toppos}px;
-    height: calc(100% - ${(props) => props.toppos + 25}px);
     overflow-y: auto;
     position: absolute;
 `;

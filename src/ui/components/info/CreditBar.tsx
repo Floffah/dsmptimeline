@@ -8,7 +8,13 @@ export default function CreditBar() {
             <p>
                 (c) 2021 Floffah & Contributors. Not affiliated with Dream SMP
                 or anyone part of it. Licensed under GPL-3.0{" "}
-                <a href="https://github.com/Floffah/dsmptimeline">See source</a>
+                <a
+                    href="https://github.com/Floffah/dsmptimeline"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    See source
+                </a>
             </p>
         </CBContainer>
     );

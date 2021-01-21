@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
-import ChooseArea from "./ChooseArea";
+import ViewArea from "./ViewArea";
 import TimelineArea from "./TimelineArea";
 import CreditBar from "../info/CreditBar";
 
@@ -24,7 +24,7 @@ export default class Body extends React.Component<any, BodyState> {
     render() {
         return (
             <BodyContainer>
-                <ChooseArea />
+                <ViewArea />
                 <TimelineArea />
                 <CreditBar />
             </BodyContainer>
