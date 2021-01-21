@@ -17,18 +17,14 @@ export default class ChooseArea extends React.Component<any, ChooseAreaState> {
         };
     }
 
-    componentDidUpdate(
-        _prevProps: Readonly<any>,
-        _prevState: Readonly<ChooseAreaState>,
-        _snapshot?: any,
-    ) {
-        if (this.state.dragging) {
-            document.addEventListener("mousemove", (e) => this.mousemove(e));
-            document.addEventListener("mouseup", (e) => this.mouseup(e));
-        } else {
-            document.removeEventListener("mousemove", (e) => this.mousemove(e));
-            document.removeEventListener("mouseup", (e) => this.mouseup(e));
-        }
+    componentDidMount() {
+        document.addEventListener("mousemove", (e) => this.mousemove(e));
+        document.addEventListener("mouseup", (e) => this.mouseup(e));
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener("mousemove", (e) => this.mousemove(e));
+        document.removeEventListener("mouseup", (e) => this.mouseup(e));
     }
 
     mousedown(e: ReactMouseEvent) {
