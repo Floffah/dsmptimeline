@@ -1,4 +1,4 @@
-import React, { useState, MouseEvent as ReactMouseEvent } from "react";
+import React, { MouseEvent as ReactMouseEvent } from "react";
 import styled from "styled-components";
 import { Button } from "antd";
 
@@ -32,27 +32,27 @@ export default class ChooseArea extends React.Component<any, ChooseAreaState> {
     }
 
     mousedown(e: ReactMouseEvent) {
-        e.stopPropagation();
-        e.preventDefault();
         this.setState({
             dragging: true,
         });
+        e.stopPropagation();
+        e.preventDefault();
     }
 
     mouseup(e: MouseEvent) {
-        e.stopPropagation();
-        e.preventDefault();
         this.setState({
             dragging: false,
         });
+        e.stopPropagation();
+        e.preventDefault();
     }
 
     mousemove(e: MouseEvent) {
-        e.stopPropagation();
-        e.preventDefault();
         this.setState({
             height: e.pageY,
         });
+        e.stopPropagation();
+        e.preventDefault();
     }
 
     render() {
