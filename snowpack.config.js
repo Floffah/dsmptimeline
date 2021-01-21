@@ -12,7 +12,7 @@ module.exports = {
     plugins: [
         "@snowpack/plugin-optimize",
         "@snowpack/plugin-typescript",
-        // "@snowpack/plugin-webpack",
+        "@snowpack/plugin-webpack",
     ],
     packageOptions: {
         installTypes: true,

@@ -22,12 +22,12 @@
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
     "skipLibCheck": true,
-    "paths": {
-      "*": [
-        ".snowpack/types/*",
-        ".snowpack/.snowpack/types/*"
-      ]
-    },
+//    "paths": {
+//      "*": [
+//        ".snowpack/types/*",
+//        ".snowpack/.snowpack/types/*"
+//      ]
+//    },
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true
   },
