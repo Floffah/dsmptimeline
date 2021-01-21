@@ -2,6 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 import ChooseArea from "./ChooseArea";
 import TimelineArea from "./TimelineArea";
+import CreditBar from "../info/CreditBar";
 
 interface BodyState {
     toparea: {
@@ -25,6 +26,7 @@ export default class Body extends React.Component<any, BodyState> {
             <BodyContainer>
                 <ChooseArea />
                 <TimelineArea />
+                <CreditBar />
             </BodyContainer>
         );
     }

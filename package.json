@@ -8,7 +8,7 @@
     "build": "yarn snowpack build",
     "allc": "yarn all-contributors"
   },
-  "version": "0.0.1",
+  "version": "0.0.1-alpha",
   "devDependencies": {
     "@mdi/js": "^5.9.55",
     "@mdi/react": "^1.4.0",

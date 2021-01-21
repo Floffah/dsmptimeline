@@ -13,12 +13,18 @@ export function schemeToTheme(scheme: Scheme): Theme {
         topareas: {
             bg: scheme.accent[10],
         },
+        creditbar: {
+            bg: scheme.accent[10],
+        },
     };
 }
 
 export interface Theme {
     bg: string;
     topareas: {
+        bg: string;
+    };
+    creditbar: {
         bg: string;
     };
 }

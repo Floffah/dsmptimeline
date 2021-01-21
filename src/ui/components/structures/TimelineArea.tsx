@@ -54,7 +54,7 @@ export const TAMidText = styled.p`
 export const TimelineContainer = styled.div<{ toppos: number; full: boolean }>`
     width: 100%;
     top: ${(props) => props.toppos}px;
-    height: calc(100% - ${(props) => props.toppos}px);
+    height: calc(100% - ${(props) => props.toppos + 25}px);
     overflow-y: auto;
     position: absolute;
 `;
