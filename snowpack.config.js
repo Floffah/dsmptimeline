@@ -16,7 +16,7 @@ module.exports = {
     ],
     packageOptions: {
         installTypes: true,
-        source: "remote",
+        //source: "remote", - will reenable once antd supports it
         polyfillNode: true,
         types: true,
     },
