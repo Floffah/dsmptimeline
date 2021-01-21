@@ -1,6 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
 import ChooseArea from "./ChooseArea";
+import TimelineArea from "./TimelineArea";
 
 interface BodyState {
     toparea: {
@@ -23,6 +24,7 @@ export default class Body extends React.Component<any, BodyState> {
         return (
             <BodyContainer>
                 <ChooseArea />
+                <TimelineArea />
             </BodyContainer>
         );
     }
