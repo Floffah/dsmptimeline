@@ -24,6 +24,9 @@
                 "author": {
                     "type": "string"
                 },
+                "cutin": {
+                    "type": "number"
+                },
                 "cutins": {
                     "items": {
                         "type": "number"
@@ -68,6 +71,9 @@
             "properties": {
                 "author": {
                     "type": "string"
+                },
+                "cutin": {
+                    "type": "number"
                 },
                 "cutins": {
                     "items": {

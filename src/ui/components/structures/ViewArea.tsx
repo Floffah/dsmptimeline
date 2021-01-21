@@ -98,7 +98,7 @@ export default class ViewArea extends React.Component<any, ViewAreaState> {
                     </ViewAreaContainer>
                     <CAContainerDragBorder
                         draggable={true}
-                        style={{ top: this.state.height - 2 }}
+                        style={{ top: this.state.height - 4 }}
                         onMouseDown={(e) => this.mousedown(e)}
                     />
                 </>
@@ -119,7 +119,7 @@ export default class ViewArea extends React.Component<any, ViewAreaState> {
                 </ViewAreaContainer>
                 <CAContainerDragBorder
                     draggable={true}
-                    style={{ top: this.state.height - 2 }}
+                    style={{ top: this.state.height - 4 }}
                     onMouseDown={(e) => this.mousedown(e)}
                 />
             </>
@@ -136,7 +136,7 @@ export const StyledButton = styled(Button)``;
 export const TooltipRef = styled(Tooltip)``;
 
 export const CAContainerDragBorder = styled.div`
-    height: 4px;
+    height: 8px;
     background-color: unset;
     position: fixed;
     cursor: n-resize;

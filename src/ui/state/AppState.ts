@@ -5,8 +5,14 @@ import TimelineInst from "../../lib/TimelineInst";
 import { notification } from "antd";
 
 interface AppState {
+    on(event: "loaded", listener: () => void): this;
+
+    on(event: "loadprogress", listener: (progress: number) => void): this;
+
     on(event: "timelineLoad", listener: () => void): this;
+
     on(event: "topresize", listener: (newsize: number) => void): this;
+
     on(event: string, listener: (...args: any[]) => void): this;
 }
 
@@ -34,6 +40,7 @@ class AppState extends events.EventEmitter {
         this.tl = TimelineInst.loadTimeline(tl);
         this.loading = true;
         this.emit("timelineLoad");
+        this.tl.load();
     }
 }
 

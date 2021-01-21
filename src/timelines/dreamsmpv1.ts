@@ -16,6 +16,7 @@ export interface TimelineVideoCommon {
     cuts: { from: number; to: number }[]; // which parts of the video should be skipped (millseconds)
     name: string; // video name
     author: string; // video author
+    cutin?: number; // how many seconds into the video should be cut (e.g. unrelated intro for 21000ms (21s))
     in: number; // when in the timeline the video should start (milliseconds). the 1st one in each second should be 0 (automatically calculated). wont automatically cut to the video, must specify a cut to in cutins. will automatically cut to video if and only if its the only thing currently playing or available
     endcutoff?: number; // milliseconds before the end that should be cut off (e.g. during end title stuff)
 }
@@ -49,6 +50,7 @@ export const DSMPTimelineV1: Timeline = {
                     cutins: [],
                     cuts: [],
                     in: 0,
+                    cutin: 21870,
                 },
                 {
                     name: "Disc War PT2",
