@@ -32,6 +32,8 @@ export interface TimelineVideoYoutube extends TimelineVideoCommon {
     };
 }
 
+// For generating json schema, use https://www.convertjson.com/javascript-object-to-json.htm then to https://jsonschema.net/home
+
 // Version 1 is based off of https://docs.google.com/document/d/1xOsi4EgUKH5Usnzp6yLiF-sQF_l1z6W5Bjnib-fM6q4/edit?usp=sharing
 export const DSMPTimelineV1: Timeline = {
     name: "Dream SMP",

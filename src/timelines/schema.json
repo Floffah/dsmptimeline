@@ -1,0 +1,126 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "TimelineSection": {
+            "properties": {
+                "videos": {
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/definitions/TimelineVideoTwitch"
+                            },
+                            {
+                                "$ref": "#/definitions/TimelineVideoYoutube"
+                            }
+                        ]
+                    },
+                    "type": "array"
+                }
+            },
+            "type": "object"
+        },
+        "TimelineVideoTwitch": {
+            "properties": {
+                "author": {
+                    "type": "string"
+                },
+                "cutins": {
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "cuts": {
+                    "items": {
+                        "properties": {
+                            "from": {
+                                "type": "number"
+                            },
+                            "to": {
+                                "type": "number"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
+                "endcutoff": {
+                    "type": "number"
+                },
+                "in": {
+                    "type": "number"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "twitch": {
+                    "properties": {
+                        "vodid": {
+                            "type": "number"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "TimelineVideoYoutube": {
+            "properties": {
+                "author": {
+                    "type": "string"
+                },
+                "cutins": {
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "cuts": {
+                    "items": {
+                        "properties": {
+                            "from": {
+                                "type": "number"
+                            },
+                            "to": {
+                                "type": "number"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
+                "endcutoff": {
+                    "type": "number"
+                },
+                "in": {
+                    "type": "number"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "youtube": {
+                    "properties": {
+                        "watchid": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        }
+    },
+    "properties": {
+        "name": {
+            "type": "string"
+        },
+        "parts": {
+            "additionalProperties": {
+                "$ref": "#/definitions/TimelineSection"
+            },
+            "type": "object"
+        }
+    },
+    "type": "object"
+}
+
