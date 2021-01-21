@@ -164,6 +164,5 @@ export const ViewAreaContainer = styled.div`
     left: 0;
     width: 100%;
     background-color: ${(props) => props.theme.topareas.bg};
-    resize: vertical;
     overflow-y: auto;
 `;

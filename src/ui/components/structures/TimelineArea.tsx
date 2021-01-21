@@ -38,15 +38,35 @@ export default class TimelineArea extends React.Component<any, TAState> {
         const pieces: ReactNode[] = [];
 
         for (const entry of AppState.inst.tl.stamps.entries()) {
-            pieces.push(
-                <TAPuzzlePiece style={{ left: entry[0] / 1000 }}>
-                    <p>{entry[1].name}</p>
-                </TAPuzzlePiece>,
-            );
+            if (entry[1].action === "in") {
+                pieces.push(
+                    <TAPuzzlePiece
+                        style={{
+                            left: entry[0] / 1000,
+                            width: (entry[1].length || 100) / 1000,
+                        }}
+                        key={pieces.length}
+                    >
+                        <p>{entry[1].name}</p>
+                        <TAPuzzleDetails>
+                            Via YouTube@{entry[1].associated || "unknown"}
+                        </TAPuzzleDetails>
+                    </TAPuzzlePiece>,
+                );
+            }
         }
 
         this.setState({
-            content: <div>{pieces}</div>,
+            content: (
+                <>
+                    <TrackLike>
+                        <Track>
+                            <p>Placeholder Track</p>
+                        </Track>
+                    </TrackLike>
+                    <TAJigSaw>{pieces}</TAJigSaw>
+                </>
+            ),
         });
     }
 
@@ -93,13 +113,62 @@ export default class TimelineArea extends React.Component<any, TAState> {
     }
 }
 
-export const TAPuzzlePiece = styled.div`
-    height: 100px;
-    border: 1px solid black;
-    border-radius: 10px;
-    width: 400px;
-    position: absolute;
+export const Track = styled.div`
+    height: 42px;
+    border-bottom: 2px solid ${(props) => props.theme.bg};
+    display: block;
+`;
+
+export const TrackLike = styled.div`
     display: inline-block;
+    height: 100%;
+    width: 200px;
+    border-top: 2px solid ${(props) => props.theme.bg};
+    border-bottom: 2px solid ${(props) => props.theme.bg};
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: ${(props) => props.theme.timeline.tracklikebg};
+    padding: 5px;
+`;
+
+export const TAJigSaw = styled.div`
+    display: inline-block;
+    position: absolute;
+    overflow-x: auto;
+    left: 200px;
+    top: 0;
+    height: 100%;
+    width: calc(100% - 200px);
+`;
+
+export const TAPuzzleDetails = styled.p`
+    margin: 0;
+    padding-left: 5px;
+`;
+export const TAPuzzlePiece = styled.div`
+    height: 50px;
+    border-radius: 5px;
+    position: absolute;
+    top: 0;
+    background-color: ${(props) => props.theme.timeline.clipbg};
+    border: 2px solid ${(props) => props.theme.bg};
+    display: inline-block;
+
+    p {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    p:not(${TAPuzzleDetails}) {
+        width: 100%;
+        background-color: ${(props) => props.theme.timeline.cliptxtbg};
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        padding-left: 5px;
+        margin-bottom: 2px;
+    }
 `;
 
 export const TAMidText = styled.div`
@@ -112,7 +181,6 @@ export const TAMidText = styled.div`
 
 export const TimelineContainer = styled.div<{ full: boolean }>`
     width: 100%;
-    overflow-y: auto;
     position: absolute;
-    overflow-x: auto;
+    overflow-y: auto;
 `;

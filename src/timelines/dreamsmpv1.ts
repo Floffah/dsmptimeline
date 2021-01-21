@@ -17,8 +17,9 @@ export interface TimelineVideoCommon {
     name: string; // video name
     author: string; // video author
     cutin?: number; // how many seconds into the video should be cut (e.g. unrelated intro for 21000ms (21s))
-    in: number; // when in the timeline the video should start (milliseconds). the 1st one in each second should be 0 (automatically calculated). wont automatically cut to the video, must specify a cut to in cutins. will automatically cut to video if and only if its the only thing currently playing or available
+    //in: number; // when in the timeline the video should start (milliseconds). the 1st one in each second should be 0 (automatically calculated). wont automatically cut to the video, must specify a cut to in cutins. will automatically cut to video if and only if its the only thing currently playing or available
     endcutoff?: number; // milliseconds before the end that should be cut off (e.g. during end title stuff)
+    length: number; // length of video in milliseconds
 }
 
 export interface TimelineVideoTwitch extends TimelineVideoCommon {
@@ -49,8 +50,9 @@ export const DSMPTimelineV1: Timeline = {
                     author: "TommyInnit",
                     cutins: [],
                     cuts: [],
-                    in: 0,
+                    //in: 0,
                     cutin: 21870,
+                    length: 1099000,
                 },
                 {
                     name: "Disc War PT2",
@@ -60,7 +62,8 @@ export const DSMPTimelineV1: Timeline = {
                     author: "TommyInnit",
                     cutins: [],
                     cuts: [],
-                    in: 1099000,
+                    //in: 1099000,
+                    length: 1312000,
                 },
                 {
                     name: "Disc War PT3",
@@ -70,7 +73,8 @@ export const DSMPTimelineV1: Timeline = {
                     author: "TommyInnit",
                     cutins: [],
                     cuts: [],
-                    in: 2411000,
+                    //in: 2411000,
+                    length: 1231000,
                 },
                 {
                     name: "Jschlatt Joins",
@@ -80,7 +84,8 @@ export const DSMPTimelineV1: Timeline = {
                     author: "TommyInnit",
                     cutins: [],
                     cuts: [],
-                    in: 3642000,
+                    //in: 3642000,
+                    length: 1123000,
                 },
             ],
         },
@@ -94,7 +99,8 @@ export const DSMPTimelineV1: Timeline = {
                     author: "Wilbur Soot",
                     cutins: [],
                     cuts: [],
-                    in: 0,
+                    //in: 0,
+                    length: 2030000,
                 },
                 {
                     name: "Dream's speech to George",
@@ -104,7 +110,8 @@ export const DSMPTimelineV1: Timeline = {
                     author: "Mixii",
                     cutins: [],
                     cuts: [],
-                    in: 2030000,
+                    //in: 2030000,
+                    length: 28000,
                 },
             ],
         },

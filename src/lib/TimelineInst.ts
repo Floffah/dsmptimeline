@@ -2,11 +2,13 @@ import { Timeline } from "../timelines/dreamsmpv1";
 import AppState from "../ui/state/AppState";
 
 interface Timestamp {
-    action: "in" | "out" | "switch";
+    action: "in" | "switch";
     twid?: number; //twitch vod id
     ytid?: string; //youtube watch id
     stamp?: number; //milliseconds into the video
     name?: string; // for debug purposes
+    length?: number; // length of video when using in action
+    associated?: string; // e.g. the author of the youtube video
 }
 
 export default class TimelineInst {
@@ -44,19 +46,25 @@ export default class TimelineInst {
         };
 
         const keys = Object.keys(this.loaded.parts);
+        let tlength = 0;
+
         for (const key of keys) {
-            for (const video of this.loaded.parts[key].videos) {
+            for (let i = 0; i < this.loaded.parts[key].videos.length; i++) {
+                const video = this.loaded.parts[key].videos[i];
                 const videoin: Timestamp = {
                     action: "in",
                     stamp: video.cutin || 0,
                     name: video.name,
+                    length: video.length,
+                    associated: video.author,
                 };
                 if ("youtube" in video) {
                     videoin.ytid = video.youtube.watchid;
                 } else if ("twitch" in video) {
                     videoin.twid = video.twitch.vodid;
                 }
-                this.stamps.set(video.in, videoin);
+                this.stamps.set(tlength, videoin);
+                tlength += video.length;
                 p(1);
             }
         }

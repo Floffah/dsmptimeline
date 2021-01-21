@@ -16,6 +16,11 @@ export function schemeToTheme(scheme: Scheme): Theme {
         creditbar: {
             bg: scheme.accent[10],
         },
+        timeline: {
+            clipbg: scheme.accent[9],
+            cliptxtbg: scheme.accent[8],
+            tracklikebg: scheme.accent[10],
+        },
     };
 }
 
@@ -26,6 +31,11 @@ export interface Theme {
     };
     creditbar: {
         bg: string;
+    };
+    timeline: {
+        clipbg: string;
+        cliptxtbg: string;
+        tracklikebg: string;
     };
 }
 
