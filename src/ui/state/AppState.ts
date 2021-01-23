@@ -3,6 +3,7 @@ import events from "events";
 import { Timeline } from "../../timelines/dreamsmpv1";
 import TimelineInst from "../../lib/TimelineInst";
 import { notification } from "antd";
+import assert from "assert";
 
 interface AppState {
     on(event: "loaded", listener: () => void): this;
@@ -26,6 +27,12 @@ class AppState extends events.EventEmitter {
 
     tl: TimelineInst;
 
+    events: Map<number, (() => void)[]> = new Map();
+    // eslint-disable-next-line no-undef
+    int?: NodeJS.Timeout;
+    paused = false;
+    time = 0;
+
     constructor(theme: Theme) {
         super();
         AppState.inst = this;
@@ -41,6 +48,54 @@ class AppState extends events.EventEmitter {
         this.loading = true;
         this.emit("timelineLoad");
         this.tl.load();
+        this.startEventLoop();
+    }
+
+    startEventLoop() {
+        if (!this.int) {
+            this.time = 1;
+            this.events = new Map();
+
+            this.int = setInterval(() => {
+                if (this.time <= 10000) {
+                    if (this.events.has(this.time)) {
+                        const events = this.events.get(this.time);
+                        assert(events !== undefined);
+                        for (const event of events) {
+                            event();
+                        }
+                        this.events.delete(this.time);
+                    }
+                    this.time += 1;
+                } else {
+                    this.time = 1;
+                }
+            }, 1);
+        } else {
+            this.events.clear();
+            clearInterval(this.int);
+            this.int = undefined;
+            this.startEventLoop();
+        }
+    }
+
+    pause() {
+        this.paused = !this.paused;
+    }
+
+    setAdaptiveTimeout(runner: () => void, timeout: number) {
+        let to = this.time + timeout;
+        if (to > 10000) {
+            to -= 10000;
+        }
+        if (this.events.has(to)) {
+            const has = this.events.get(to);
+            assert(has !== undefined);
+            has.push(runner);
+            this.events.set(to, has);
+        } else {
+            this.events.set(to, [runner]);
+        }
     }
 }
 

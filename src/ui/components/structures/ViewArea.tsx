@@ -1,16 +1,25 @@
-import React, { MouseEvent as ReactMouseEvent } from "react";
-import styled from "styled-components";
-import { Button, Tooltip } from "antd";
+import React, { MouseEvent as ReactMouseEvent, ReactNode } from "react";
 import AppState from "../../state/AppState";
 import { DSMPTimelineV1 } from "../../../timelines/dreamsmpv1";
+import assert from "assert";
+import YouTube from "react-youtube";
+import { YouTubePlayer } from "youtube-player/dist/types";
+import styled from "styled-components";
+import { Button, Tooltip } from "antd";
 
 interface ViewAreaState {
     height: number;
     dragging: boolean;
     mode: "choose" | "view";
+    viewtype: "none" | "yt" | "tw";
+    ytid?: string;
+    ytc?: ReactNode;
 }
 
 export default class ViewArea extends React.Component<any, ViewAreaState> {
+    last = 0;
+    current: YouTubePlayer;
+
     constructor(p: any) {
         super(p);
 
@@ -18,9 +27,53 @@ export default class ViewArea extends React.Component<any, ViewAreaState> {
             height: 500,
             dragging: false,
             mode: "choose",
+            viewtype: "none",
         };
 
         AppState.inst.on("timelineLoad", () => this.setState({ mode: "view" }));
+        AppState.inst.on("loaded", () => this.calcNext());
+    }
+
+    calcNext() {
+        for (let i = this.last; i < this.last + 10000; i++) {
+            if (AppState.inst.tl.stamps.has(i)) {
+                const stamp = AppState.inst.tl.stamps.get(i);
+                assert(stamp !== undefined);
+                if (stamp.action === "in") {
+                    this.setState({
+                        viewtype: "yt",
+                        ytid: stamp.ytid,
+                        ytc: (
+                            <YTFrame
+                                videoId={this.state.ytid}
+                                opts={{
+                                    playerVars: {
+                                        autoplay: 1,
+                                        controls: 0,
+                                        disablekb: 1,
+                                        enablejsapi: 1,
+                                        fs: 0,
+                                        iv_load_policy: 3,
+                                        loop: 0,
+                                        modestbranding: 1,
+                                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                        //@ts-ignore - i need to because this isnt defined in the package's type definitions but definitely works
+                                        widget_referrer:
+                                            "https://timeline.dreamsmp.live",
+                                    },
+                                    height: `100%`,
+                                    width: `100%`,
+                                }}
+                                onReady={(e) => this.ytready(e)}
+                            />
+                        ),
+                    });
+                }
+            }
+        }
+        this.last += 10000;
+
+        AppState.inst.setAdaptiveTimeout(() => this.calcNext(), 10000);
     }
 
     componentDidMount() {
@@ -75,6 +128,14 @@ export default class ViewArea extends React.Component<any, ViewAreaState> {
         }
     }
 
+    ytready(e: { target: YouTubePlayer }) {
+        this.current = e.target;
+    }
+
+    ytstate(e: { target: YouTubePlayer; data: number }) {
+        this.current = e.target;
+    }
+
     render() {
         if (this.state.mode === "choose") {
             return (
@@ -104,18 +165,26 @@ export default class ViewArea extends React.Component<any, ViewAreaState> {
                 </>
             );
         }
+        let vbc: ReactNode | string = "";
+        const vw = this.state.height / (9 / 16);
+        const vh = this.state.height;
+
+        if (this.state.viewtype === "yt" && this.state.ytid !== undefined) {
+            vbc = this.state.ytc;
+        }
+
         return (
             <>
                 <ViewAreaContainer style={{ height: this.state.height }}>
                     <ViewBox
                         style={{
-                            height: this.state.height,
-                            width: this.state.height / (9 / 16),
-                            left:
-                                window.innerWidth / 2 -
-                                this.state.height / (9 / 16) / 2,
+                            height: vh,
+                            width: vw,
+                            left: window.innerWidth / 2 - vw / 2,
                         }}
-                    />
+                    >
+                        {vbc}
+                    </ViewBox>
                 </ViewAreaContainer>
                 <CAContainerDragBorder
                     draggable={true}
@@ -126,6 +195,11 @@ export default class ViewArea extends React.Component<any, ViewAreaState> {
         );
     }
 }
+
+export const YTFrame = styled(YouTube)`
+    width: 100%;
+    height: 100%;
+`;
 
 export const ViewBox = styled.div`
     background-color: black;
@@ -141,6 +215,7 @@ export const CAContainerDragBorder = styled.div`
     position: fixed;
     cursor: n-resize;
     width: 100%;
+    z-index: 1000;
 `;
 
 export const ViewButtonContainer = styled.div`
