@@ -6,8 +6,7 @@ module.exports = {
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
         "prettier",
-        "prettier/@typescript-eslint",
-        "preact",
+        "plugin:react/recommended",
     ],
     rules: {
         "@typescript-eslint/explicit-module-boundary-types": "off",

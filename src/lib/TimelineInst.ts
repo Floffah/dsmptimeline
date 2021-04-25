@@ -1,5 +1,5 @@
 import { Timeline } from "../timelines/dreamsmpv1";
-import AppState from "../ui/state/AppState";
+import AppState from "../state/AppState";
 
 interface Timestamp {
     action: "in" | "switch";
@@ -12,15 +12,17 @@ interface Timestamp {
 }
 
 export default class TimelineInst {
-    static loadTimeline(tl: Timeline): TimelineInst {
-        return new TimelineInst(tl);
+    static loadTimeline(tl: Timeline, state: AppState): TimelineInst {
+        return new TimelineInst(tl, state);
     }
 
     loaded: Timeline;
     stamps: Map<number, Timestamp> = new Map();
+    state: AppState;
 
-    constructor(tl: Timeline) {
+    constructor(tl: Timeline, state: AppState) {
         this.loaded = tl;
+        this.state = state;
     }
 
     getTotal(): number {
@@ -42,7 +44,7 @@ export default class TimelineInst {
 
         const p = (u: number) => {
             done += u;
-            AppState.inst.emit("loadprogress", (done / total) * 100);
+            this.state.emit("loadprogress", (done / total) * 100);
         };
 
         const keys = Object.keys(this.loaded.parts);
@@ -73,8 +75,8 @@ export default class TimelineInst {
         );
         p(1);
         console.log(this.stamps.entries());
-        AppState.inst.loading = false;
-        AppState.inst.loaded = true;
-        AppState.inst.emit("loaded");
+        this.state.loading = false;
+        this.state.loaded = true;
+        this.state.emit("loaded");
     }
 }
