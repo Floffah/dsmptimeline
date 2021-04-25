@@ -4,8 +4,6 @@
   "description": "All streams/videos of the smp cut into a big timeline",
   "license": "GPL-3.0",
   "scripts": {
-    "dev": "yarn snowpack dev",
-    "build": "yarn snowpack build",
     "allc": "yarn all-contributors",
     "schema": "yarn typescript-json-schema src/timelines/dreamsmpv1.ts Timeline -o src/timelines/schema.json"
   },
