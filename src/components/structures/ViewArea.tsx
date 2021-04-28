@@ -27,17 +27,26 @@ interface ViewAreaState {
 }
 
 export default class ViewArea extends React.Component<any, ViewAreaState> {
+    winresizing = false;
     last = 0;
     current!: YouTubePlayer;
 
+    timeinvideo = 0;
+
     context!: ContextType<typeof AppContext>;
     static contextType = AppContext;
+
+    utimeint!: NodeJS.Timeout;
+    resizeint!: NodeJS.Timeout;
 
     listeners = {
         timelineLoad: () => this.setState({ mode: "view" }),
         loaded: () => this.calcNext(),
         mousemove: (e: MouseEvent) => this.mousemove(e),
         mouseup: (e: MouseEvent) => this.mouseup(e),
+        windowresize: () => {
+            this.winresizing = true;
+        },
     };
 
     constructor(p: any) {
@@ -83,7 +92,6 @@ export default class ViewArea extends React.Component<any, ViewAreaState> {
                                     height: `100%`,
                                     width: `100%`,
                                 }}
-                                c
                                 onReady={(e) => this.ytready(e)}
                             />
                         ),
@@ -97,21 +105,39 @@ export default class ViewArea extends React.Component<any, ViewAreaState> {
     }
 
     componentDidMount() {
+        window.addEventListener("resize", this.listeners.windowresize);
         document.addEventListener("mousemove", this.listeners.mousemove);
         document.addEventListener("mouseup", this.listeners.mouseup);
         this.context.on("timelineLoad", this.listeners.timelineLoad);
         this.context.on("loaded", this.listeners.loaded);
+
+        this.utimeint = setInterval(() => {
+            if (this.current) {
+                this.timeinvideo = Math.round(
+                    this.current.getCurrentTime() * 1000,
+                );
+            }
+        }, 100);
+
+        this.resizeint = setInterval(() => {
+            if (this.winresizing) {
+                this.winresizing = false;
+                this.forceUpdate();
+            }
+        }, 500);
     }
 
     componentWillUnmount() {
+        window.removeEventListener("resize", this.listeners.windowresize);
         document.removeEventListener("mousemove", this.listeners.mousemove);
         document.removeEventListener("mouseup", this.listeners.mouseup);
-
         this.context.removeListener(
             "timelineLoad",
             this.listeners.timelineLoad,
         );
         this.context.removeListener("loaded", this.listeners.loaded);
+        clearInterval(this.utimeint);
+        clearInterval(this.resizeint);
     }
 
     mousedown(e: ReactMouseEvent) {
