@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import Body from "../components/structures/Body";
 import { NextSeo } from "next-seo";
-import { buildServerPropsFN } from "../lib/ssr";
+import { buildStaticPropsFN } from "../lib/ssg";
 
 const Index: FC = (_p) => {
     return (
@@ -14,4 +14,5 @@ const Index: FC = (_p) => {
 
 export default Index;
 
-export const getServerSideProps = buildServerPropsFN({});
+//export const getServerSideProps = buildServerPropsFN({});
+export const getStaticProps = buildStaticPropsFN({});
